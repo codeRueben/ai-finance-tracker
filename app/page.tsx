@@ -9,7 +9,7 @@ import MonthSelector from './components/MonthSelector'
 import DailyChart from './components/DailyChart'
 import MagicEntry from './components/MagicEntry'
 import SavingsGrid from './components/SavingsGrid'
-import CurrencyPopup from './components/CurrencyPopup' // NEW IMPORT
+import CurrencyPopup from './components/CurrencyPopup'
 import {
   Coffee, Car, ShoppingBag, Film, Activity,
   Wallet, TrendingUp, TrendingDown, Calendar, DollarSign, Trash2
@@ -69,7 +69,7 @@ export default async function Home({ searchParams }: { searchParams: { month?: s
   const balance = income - totalSpent
   const budgetProgress = Math.min((totalSpent / budget) * 100, 100)
 
-  // FIX: Force TS to accept currency property even if schema cache is old
+  // FIX: Force TS to accept currency property
   const currencyCode = (userSettings as any)?.currency || 'USD'
   const symbol = getCurrencySymbol(currencyCode)
 
@@ -106,7 +106,7 @@ export default async function Home({ searchParams }: { searchParams: { month?: s
           </div>
 
           <div className="flex items-center gap-3">
-            {/* NEW CURRENCY POPUP BUTTON */}
+            {/* CURRENCY POPUP BUTTON */}
             <CurrencyPopup currentCurrency={currencyCode} />
 
             <MonthSelector currentMonth={currentMonth} currentYear={currentYear} />
@@ -133,14 +133,14 @@ export default async function Home({ searchParams }: { searchParams: { month?: s
            </div>
         </div>
 
-        {/* SMART INSIGHTS */}
+        {/* SMART INSIGHTS (Fixed: Now accepts symbol) */}
         <div className="mb-8">
-          <SmartInsight transactions={transactions} budget={budget} />
+          <SmartInsight transactions={transactions} budget={budget} symbol={symbol} />
         </div>
 
-        {/* SAVINGS GOALS */}
+        {/* SAVINGS GOALS (Fixed: Now accepts symbol) */}
         <div className="mb-8">
-          <SavingsGrid goals={savingsGoals} />
+          <SavingsGrid goals={savingsGoals} symbol={symbol} />
         </div>
 
         {/* STATS CARDS */}
