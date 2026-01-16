@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String
+  amount      Float
+  description String
+  category    String?
+  date        DateTime @default(now())
+}
+
+model UserSettings {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  budget    Float    @default(2000)
+  income    Float    @default(4500)
+  currency  String   @default("USD")
+}
+
+model SavingsGoal {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  target    Float
+  current   Float    @default(0)
+  emoji     String
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  type      String
+  balance   Float
+  category  String
+  createdAt DateTime @default(now())
+}
